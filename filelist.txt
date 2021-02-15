@@ -1,0 +1,13 @@
+Adguard,/volume2/mac/단일필수
+Bartender,/volume2/mac/단일필수
+Carbon_Copy_Cloner
+iFunia_Video_Converter
+Reeder
+URL_Manager
+Usher
+Whisk
+wirecast
+Swinsian
+FSNotes
+Jixi_Premium
+Stacks
