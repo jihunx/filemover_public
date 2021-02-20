@@ -6,14 +6,20 @@ file_ext = (".dmg", ".zip")
 # 경로가 지정돼 있지 않을 경우 기본으로 이동할 디렉터리를 입력합니다.
 default_dir = r"/volume2/mac"
 
+# 대상 디렉터리 절대 경로를 아래에 입력합니다. 경로 끝에 슬래시 입력하지 마세요.
+target_dir = r"/volume2/downloads"
+
 # 대상 디렉터리에 같은 이름의 파일이 있을 경우 이동할 디렉터리를 입력합니다.
 dup_dir = r"/volume2/downloads/duplicated"
 
 # filelist.txt 파일의 절대 경로
 file_list = r"/volume1/homes/jihunx/filemover/filelist.txt"
 
+# filelist.txt 리스트 순서를 정렬할지 여부 선택. True는 정렬한다. False면 안 한다.
+sort_boolean = True
 
-def get_strings():
+
+def get_strings(file):
     # filelist.txt에서 분류할 단어들을 가져온다(콤마 입력한 후 이동할 경로 지정).
     # 예1(1행) alfred,/volume2/mac/단일필수
     # 예2(2행) adguard
@@ -22,8 +28,16 @@ def get_strings():
     # 예1) 해당 단어가 포함된 파일을 콤마 뒤 절대 경로로 이동
     # 예2) 단어는 있으나, 이동할 경로가 없는 경우 default_dir로 이동
     global strlist
-    with open(file_list, 'r', encoding='utf-8-sig') as f:
-        strlist = f.readlines()
+    with open(file, 'r', encoding='utf-8-sig') as f:
+        strlist = [i.strip() for i in f.readlines() if len(i) > 1]
+
+
+def sorting(file):
+    if sort_boolean:
+        strlist.sort()
+        with open(file, 'w') as ff:
+            for item in strlist:
+                ff.write("{}\n".format(item))
 
 
 def filemove(filename, dst):
@@ -69,10 +83,6 @@ def search(dirname):
     for filename in filelist:
         # 지정 문자열 한 개를 꺼내서
         for str in strlist:
-            str = str.strip()
-
-            if len(str) == 0:
-                continue
 
             lst_str = str.split(',')
 
@@ -92,7 +102,8 @@ def search(dirname):
             continue
 
 
-get_strings()
+get_strings(file_list)
 
-# 대상 디렉터리 절대 경로를 아래에 입력합니다. 경로 끝에 슬래시 입력하지 마세요.
-search("/volume2/downloads")
+search(target_dir)
+
+sorting(file_list)
