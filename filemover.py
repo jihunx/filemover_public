@@ -16,7 +16,7 @@ dup_dir = r"/volume2/downloads/duplicated"
 file_list = r"/volume1/homes/jihunx/filemover/filelist.txt"
 
 # filelist.txt 리스트 순서를 정렬할지 여부 선택. True는 정렬한다. False면 안 한다.
-sort_boolean = True
+sort_boolean = False
 
 
 def get_strings(file):
